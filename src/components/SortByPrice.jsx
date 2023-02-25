@@ -1,12 +1,18 @@
 import {useEffect, useState} from "react";
+import {useSearchParams} from "react-router-dom";
 
 function SortByPrice({setPriceOrder}) {
 
-    const [value, setValue] = useState('')
+    const [value, setValue] = useState('');
+    const [searchParams] = useSearchParams('');
 
     useEffect(() => {
-        setPriceOrder(value)
+        setPriceOrder(value);
     }, [value])
+
+    useEffect(() => {
+        setValue(searchParams.get('order') || '');
+    }, [])
 
     function handleSelect(event) {
         setValue(event.target.value)
