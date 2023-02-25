@@ -1,8 +1,10 @@
 import {useEffect, useState} from "react";
+import Search from "./Search";
 
 function Products() {
 
     const [ProductList, setProductList] = useState([]);
+    const [query, setQuery] = useState([])
 
     useEffect(() => {
         const controller = new AbortController();
@@ -16,7 +18,7 @@ function Products() {
         }
     }, [])
 
-    async function getProducts(signal){
+    async function getProducts(signal) {
         const response = await fetch('/products/', {signal})
 
         return await response.json();
@@ -24,14 +26,26 @@ function Products() {
 
     return (
         <div>
-            Products
+
+            <Search
+                setQuery={setQuery}
+            />
+
+            <h2>Products</h2>
+
             <ul>
-                {ProductList.map((product) => (
-                <li key={product.id}>
-                    {product.name}
-                </li>
-                ))}
+                {ProductList
+                    .filter(({name, description}) => `${name} ${description}`
+                        .toLowerCase()
+                        .includes(query.toLowerCase()))
+                    .map((product) => (
+                        <li key={product.id}>
+                            {product.name}
+                        </li>
+                    ))
+                }
             </ul>
+
         </div>
     );
 }
