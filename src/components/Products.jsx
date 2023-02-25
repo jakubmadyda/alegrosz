@@ -6,6 +6,7 @@ function Products() {
 
     const [ProductList, setProductList] = useState([]);
     const [query, setQuery] = useState([]);
+    const [priceOrder, setPriceOrder] = useState([])
 
     useEffect(() => {
         const controller = new AbortController();
@@ -25,6 +26,17 @@ function Products() {
         return await response.json();
     }
 
+    function handleSortByPrice(a, b) {
+        switch (priceOrder){
+            case '':
+                return 0;
+            case 'ascending':
+                return a.price - b.price;
+            case 'descending':
+                return b.price - a.price;
+        }
+    }
+
     return (
         <div>
 
@@ -33,16 +45,19 @@ function Products() {
             />
 
             <h2>Products</h2>
-            <SortByPrice/>
+            <SortByPrice
+                setPriceOrder={setPriceOrder}
+            />
 
             <ul>
                 {ProductList
                     .filter(({name, description}) => `${name} ${description}`
                         .toLowerCase()
                         .includes(query.toLowerCase()))
+                    .sort(handleSortByPrice)
                     .map((product) => (
                         <li key={product.id}>
-                            {product.name}
+                            {product.name} {product.price}
                         </li>
                     ))
                 }

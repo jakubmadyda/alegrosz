@@ -1,8 +1,12 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-function SortByPrice() {
+function SortByPrice({setPriceOrder}) {
 
-    const [value, setValue] = useState('ascending')
+    const [value, setValue] = useState('')
+
+    useEffect(() => {
+        setPriceOrder(value)
+    }, [value])
 
     function handleSelect(event) {
         setValue(event.target.value)
