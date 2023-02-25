@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import Search from "./Search";
+import SortByPrice from "./SortByPrice";
 
 function Products() {
 
@@ -32,6 +33,7 @@ function Products() {
             />
 
             <h2>Products</h2>
+            <SortByPrice/>
 
             <ul>
                 {ProductList
