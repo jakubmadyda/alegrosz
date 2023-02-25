@@ -4,7 +4,7 @@ import Search from "./Search";
 function Products() {
 
     const [ProductList, setProductList] = useState([]);
-    const [query, setQuery] = useState([])
+    const [query, setQuery] = useState([]);
 
     useEffect(() => {
         const controller = new AbortController();
